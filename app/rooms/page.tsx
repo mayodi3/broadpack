@@ -1,23 +1,14 @@
-"use client";
-
 import { Rating } from "@/components/rating";
 import Hero from "@/components/shared/hero";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, Bath, Bed, Wifi } from "lucide-react";
+import { Bath, Bed, Wifi } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import Link from "next/link";
 import { rooms } from "./rooms";
 
 const RoomsPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 9;
-  const [total, setTotal] = useState(0);
-
-  const router = useRouter();
-
   return (
-    <div>
+    <div className="mb-10">
       <Hero />
       <div className="w-full flex flex-col items-center justify-center space-y-4 mt-10">
         <div className="space-y-4">
@@ -27,7 +18,7 @@ const RoomsPage = () => {
             <div className="h-1 w-14 md:w-28 bg-primary"></div>
           </h1>
           <h1 className="text-3xl md:text-6xl font-extrabold">
-            Expore Our <span className="text-primary">Rooms</span>
+            Explore Our <span className="text-primary">Rooms</span>
           </h1>
         </div>
 
@@ -89,51 +80,23 @@ const RoomsPage = () => {
 
                 <p>{room.shortDescription}</p>
 
-                <div className="flex justify-between">
-                  <Button
-                    className="rounded-none"
-                    onClick={() => router.push(`/rooms/${index}`)}
+                <div className="flex justify-between gap-2">
+                  <Link 
+                    href={`/rooms/${index}`}
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-none text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
                   >
                     VIEW DETAILS
-                  </Button>
-                  <Button
-                    className="rounded-none bg-black"
-                    onClick={() => router.push(`/auth/login`)}
+                  </Link>
+                  <Link 
+                    href="/auth/login"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-none text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-black/90 h-10 px-4 py-2"
                   >
                     BOOK NOW
-                  </Button>
+                  </Link>
                 </div>
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="flex items-center space-x-3 m-10">
-          <ArrowLeft
-            className={`cursor-pointer bg-primary w-10 h-10 rounded-full ${
-              currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            onClick={() => {
-              setCurrentPage((prev) => Math.max(prev - 1, 1));
-            }}
-          />
-
-          <span className="font-extrabold text-primary text-2xl">
-            Page {currentPage} of {Math.ceil(total / pageSize)}
-          </span>
-
-          <ArrowRight
-            className={`cursor-pointer bg-primary w-10 h-10 rounded-full ${
-              currentPage === Math.ceil(total / pageSize)
-                ? "opacity-50 cursor-not-allowed"
-                : ""
-            }`}
-            onClick={() => {
-              setCurrentPage((prev) =>
-                Math.min(prev + 1, Math.ceil(total / pageSize))
-              );
-            }}
-          />
         </div>
       </div>
     </div>

@@ -82,12 +82,7 @@ const SpecialOffersSection = () => {
       duration: "3 Days, 2 Nights",
       validUntil: "September 31, 2025",
       image: "/Customers 1.webp", // Changed from /room-3.jpg
-      features: [
-        "Family suite accommodation",
-        "Kids eat free (under 12)",
-        "Local attraction tickets",
-        "Family game room access",
-      ],
+      features: ["Family suite accommodation", "Kids eat free (under 12)"],
       badge: "Best Value",
       badgeColor: "bg-green-600",
       isLimited: true,
