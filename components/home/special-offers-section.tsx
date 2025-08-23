@@ -44,7 +44,7 @@ const SpecialOffersSection = () => {
       features: [
         "Luxury room accommodation",
         "Complimentary breakfast",
-        "Late checkout (2 PM)",
+        "Late checkout Mid-day",
         "Welcome drink on arrival",
       ],
       badge: "Most Popular",
@@ -283,20 +283,6 @@ const SpecialOffersSection = () => {
                 </div>
 
                 {/* Validity and CTA */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <Clock className="w-3 h-3" />
-                    <span>Valid until {offer.validUntil}</span>
-                  </div>
-
-                  <Button
-                    onClick={() => handleBookOffer(offer.id)}
-                    className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-5 shadow-lg hover:shadow-xl transition-all duration-300 group"
-                  >
-                    Book This Offer
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                  </Button>
-                </div>
               </div>
             </div>
           ))}
