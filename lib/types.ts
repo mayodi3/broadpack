@@ -84,3 +84,40 @@ export interface Blogs {
   total: number;
   documents: Blog[];
 }
+
+// export interface Room {
+//   name: string;
+//   price: number;
+//   beds: number;
+//   bathrooms: number;
+//   wifi: boolean;
+//   tv: boolean;
+//   ac: boolean;
+//   laundry: boolean;
+//   dinner: boolean;
+//   images: string[];
+//   shortDescription: string;
+//   description: string;
+//   status: string;
+//   averageRating?: number;
+//   breakfast?: boolean;
+// }
+
+export interface MeetingRoom {
+  name: string;
+  price: number; // per hour
+  capacity: number;
+  wifi: boolean;
+  projector: boolean;
+  whiteboard: boolean;
+  videoConference: boolean;
+  catering: boolean;
+  images: string[];
+  shortDescription: string;
+  description: string;
+  status: string;
+  averageRating?: number;
+  equipment?: string[];
+}
+
+export type BookingType = "room" | "meeting";

@@ -104,7 +104,7 @@ const HeroSection = () => {
   ];
 
   const handleBookNow = () => {
-    router.push("/contact");
+    router.push("/booking");
   };
 
   const handleExploreRooms = () => {
