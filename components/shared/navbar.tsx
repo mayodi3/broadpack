@@ -123,9 +123,9 @@ const Navbar = () => {
       <nav className="bg-slate-800 py-4" ref={dropdownRef}>
         <div className="container mx-auto px-4 flex items-center justify-between">
           {/* Logo */}
-          <div className="text-2xl font-bold text-primary">
+          <Link href="/" className="text-2xl font-bold text-primary">
             BROADPARK HOTELS
-          </div>
+          </Link>
 
           {/* Desktop menu */}
           <div className="hidden lg:flex items-center space-x-8">

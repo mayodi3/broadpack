@@ -466,7 +466,7 @@ export default function UnifiedBookingPage() {
         >
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="room">Hotel Rooms</TabsTrigger>
-            <TabsTrigger value="meeting">Meeting Rooms</TabsTrigger>
+            <TabsTrigger value="meeting">Conference Rooms</TabsTrigger>
           </TabsList>
 
           <TabsContent value="room">
@@ -695,7 +695,7 @@ export default function UnifiedBookingPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <CalendarIcon className="h-5 w-5" />
-                  Search Available Meeting Rooms
+                  Search Available Conference Rooms
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -789,13 +789,13 @@ export default function UnifiedBookingPage() {
               </CardContent>
             </Card>
 
-            {/* Available Meeting Rooms */}
+            {/* Available Conference Rooms */}
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">
                   {checkInDate && startTime && endTime
-                    ? "Available Meeting Rooms"
-                    : "All Meeting Rooms"}
+                    ? "Available Conference Rooms"
+                    : "All Conference Rooms"}
                 </h2>
                 <span className="text-gray-600">
                   {filteredMeetingRooms.length} room

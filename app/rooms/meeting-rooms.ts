@@ -10,7 +10,7 @@ export const meetingRooms: MeetingRoom[] = [
     whiteboard: true,
     videoConference: true,
     catering: true,
-    images: ["/modern-boardroom-with-conference-table.png"],
+    images: ["/Conference.webp"],
     shortDescription: "Premium boardroom for executive meetings.",
     description:
       "Our Executive Boardroom features a large conference table for up to 12 people, state-of-the-art AV equipment, high-speed Wi-Fi, and professional catering options. Perfect for board meetings and important presentations.",
@@ -32,7 +32,7 @@ export const meetingRooms: MeetingRoom[] = [
     whiteboard: true,
     videoConference: false,
     catering: true,
-    images: ["/creative-workshop-space-with-whiteboards.png"],
+    images: ["/Conference.webp"],
     shortDescription: "Flexible space for workshops and brainstorming.",
     description:
       "A dynamic workshop space designed for creativity and collaboration. Features moveable furniture, multiple whiteboards, projector, and flexible seating arrangements. Ideal for team building and creative sessions.",
@@ -54,7 +54,7 @@ export const meetingRooms: MeetingRoom[] = [
     whiteboard: true,
     videoConference: true,
     catering: false,
-    images: ["/small-meeting-room-with-round-table.png"],
+    images: ["/Conference.webp"],
     shortDescription: "Intimate space for small team meetings.",
     description:
       "Perfect for small team meetings and one-on-one discussions. Features a round table for up to 6 people, whiteboard, video conferencing capabilities, and high-speed Wi-Fi.",
@@ -71,7 +71,7 @@ export const meetingRooms: MeetingRoom[] = [
     whiteboard: true,
     videoConference: true,
     catering: true,
-    images: ["/training-room-with-classroom-setup.png"],
+    images: ["/Conference.webp"],
     shortDescription: "Large training room with classroom setup.",
     description:
       "Spacious training room with classroom-style seating for up to 30 people. Equipped with projector, sound system, whiteboards, and video conferencing. Perfect for training sessions and seminars.",
