@@ -37,7 +37,7 @@ export default function RootLayout({
           <div className="min-h-screen">{children}</div>
         </div>
         <ScrollToTop />
-        <Chatbot />
+        {/* <Chatbot /> */}
         <Footer />
         <ToastContainer position="top-right" />
       </body>
