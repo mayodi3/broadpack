@@ -4,6 +4,7 @@ import type React from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import { useRouter } from "next/navigation";
 
 interface Message {
   id: string;
@@ -17,6 +18,7 @@ const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -39,7 +41,7 @@ const Chatbot = () => {
       setInputValue("");
       setIsLoading(true);
 
-      const isLive = true;
+      const isLive = false;
       const url = isLive
         ? "https://n8n.mayodi.help/webhook/3ac9320f-299a-4440-adef-7ccbb46f5079"
         : "https://n8n.mayodi.help/webhook-test/3ac9320f-299a-4440-adef-7ccbb46f5079";
@@ -56,7 +58,17 @@ const Chatbot = () => {
           }),
         });
 
-        const data = await response.json();
+        const data = (await response.json()) as {
+          message: string;
+          redirectTo?: string | null;
+        };
+
+        if (data.redirectTo) {
+          setTimeout(() => {
+            router.push(data.redirectTo!);
+            setIsOpen(false);
+          }, 1000);
+        }
 
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
