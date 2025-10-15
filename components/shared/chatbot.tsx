@@ -41,7 +41,7 @@ const Chatbot = () => {
       setInputValue("");
       setIsLoading(true);
 
-      const isLive = false;
+      const isLive = true;
       const url = isLive
         ? "https://n8n.mayodi.help/webhook/3ac9320f-299a-4440-adef-7ccbb46f5079"
         : "https://n8n.mayodi.help/webhook-test/3ac9320f-299a-4440-adef-7ccbb46f5079";
