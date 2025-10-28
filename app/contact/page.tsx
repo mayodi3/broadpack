@@ -6,9 +6,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import Hero from "@/components/shared/hero";
 import { FormEvent, useMemo, useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
+
+const API_URL = "https://server.mayodi.help";
+const CLIENT_ID = "client1"; // Change this for different clients
 
 export default function ContactPage() {
   const form = useRef<HTMLFormElement>(null);
@@ -27,25 +29,57 @@ export default function ContactPage() {
   // Your hotel's coordinates
   const hotelPosition: [number, number] = [0.076756, 34.719414];
 
-  const sendEmail = (e: FormEvent) => {
+  const sendEmail = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    emailjs
-      .sendForm("service_yiiq9qq", "template_x2kdbwq", form.current!, {
-        publicKey: "dfgwoH7dPSWT8UHCS",
-      })
-      .then(
-        () => {
-          toast.success("Email Sent. We'll Contact You Shortly");
-          setIsLoading(false);
-          form.current!.reset();
+    try {
+      // Get form data
+      const formData = new FormData(form.current!);
+      const data = {
+        user_name: formData.get("user_name") as string,
+        user_email: formData.get("user_email") as string,
+        user_subject: formData.get("user_subject") as string,
+        message: formData.get("message") as string,
+      };
+
+      // Validate fields
+      if (
+        !data.user_name ||
+        !data.user_email ||
+        !data.user_subject ||
+        !data.message
+      ) {
+        toast.error("Please fill in all fields");
+        setIsLoading(false);
+        return;
+      }
+
+      // Send to backend
+      const response = await fetch(`${API_URL}/email/${CLIENT_ID}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        (error) => {
-          toast.error("Failed to Send email. Please try again.");
-          setIsLoading(false);
-        }
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        toast.success("Email Sent. We'll Contact You Shortly");
+        form.current!.reset();
+      } else {
+        toast.error(result.error || "Failed to send email. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error(
+        "Failed to send email. Please check your connection and try again."
       );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -110,12 +144,14 @@ export default function ContactPage() {
                   name="user_name"
                   placeholder="Your Name"
                   className="py-10 border border-gray-300 rounded-md"
+                  required
                 />
                 <Input
                   type="email"
                   name="user_email"
                   placeholder="Your Email"
                   className="py-10 border border-gray-300 rounded-md"
+                  required
                 />
               </div>
               <Input
@@ -123,15 +159,18 @@ export default function ContactPage() {
                 placeholder="Subject"
                 name="user_subject"
                 className="py-10 border border-gray-300 rounded-md"
+                required
               />
               <Textarea
                 name="message"
                 placeholder="Message"
                 rows={6}
                 className="py-10 border border-gray-300 rounded-md resize-none"
+                required
               />
               <Button
                 disabled={isLoading}
+                type="submit"
                 className="w-full bg-primary text-white font-bold py-6 rounded-none px-4 text-lg"
               >
                 {isLoading ? "SENDING MESSAGE..." : "SEND MESSAGE"}

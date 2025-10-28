@@ -48,6 +48,7 @@ export default function UnifiedBookingPage() {
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [isCheckInOpen, setIsCheckInOpen] = useState(false);
   const [isCheckOutOpen, setIsCheckOutOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Guest information
   const [guestInfo, setGuestInfo] = useState({
@@ -142,7 +143,7 @@ export default function UnifiedBookingPage() {
     setShowBookingForm(true);
   };
 
-  const handleBookingSubmit = () => {
+  const handleBookingSubmit = async () => {
     if (
       !guestInfo.firstName ||
       !guestInfo.lastName ||
@@ -174,8 +175,55 @@ export default function UnifiedBookingPage() {
       guestInfo,
     };
 
-    sessionStorage.setItem("pendingBooking", JSON.stringify(bookingData));
-    router.push("/auth/register?from=booking");
+    // Show loading state
+    const loadingToast = toast.loading("Submitting your booking...");
+
+    try {
+      const API_URL =
+        process.env.NEXT_PUBLIC_API_URL || "https://server.mayodi.help";
+      const CLIENT_ID = "client1";
+
+      const response = await fetch(`${API_URL}/email/${CLIENT_ID}/booking`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        toast.dismiss(loadingToast);
+        toast.success(
+          "Booking request submitted! Check your email for confirmation."
+        );
+
+        // Optional: Save to sessionStorage for any future use
+        sessionStorage.setItem("lastBooking", JSON.stringify(bookingData));
+
+        // Reset form after successful submission
+        setTimeout(() => {
+          resetSearch();
+          setGuestInfo({
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            specialRequests: "",
+          });
+        }, 2000);
+      } else {
+        toast.dismiss(loadingToast);
+        toast.error(
+          result.error || "Failed to submit booking. Please try again."
+        );
+      }
+    } catch (error) {
+      toast.dismiss(loadingToast);
+      console.error("Booking submission error:", error);
+      toast.error(
+        "Failed to submit booking. Please check your connection and try again."
+      );
+    }
   };
 
   const resetSearch = () => {
@@ -424,12 +472,12 @@ export default function UnifiedBookingPage() {
                       }
                     />
                   </div>
-
                   <Button
                     onClick={handleBookingSubmit}
+                    disabled={isSubmitting}
                     className="w-full py-6 text-lg font-semibold"
                   >
-                    Continue to Complete Booking
+                    {isSubmitting ? "Submitting..." : "Submit Booking Request"}
                   </Button>
 
                   <p className="text-sm text-gray-600 text-center">

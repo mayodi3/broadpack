@@ -46,22 +46,21 @@ const Chatbot = () => {
         ? "https://n8n.mayodi.help/webhook/3ac9320f-299a-4440-adef-7ccbb46f5079"
         : "https://n8n.mayodi.help/webhook-test/3ac9320f-299a-4440-adef-7ccbb46f5079";
 
+      const payload = {
+        message: inputValue,
+        timeStamp: Date.now().toString(),
+      };
+
       try {
         const response = await fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            message: inputValue,
-            timeStamp: Date.now().toString(),
-          }),
+          body: JSON.stringify(payload),
         });
 
-        const data = (await response.json()) as {
-          message: string;
-          redirectTo?: string | null;
-        };
+        const data = await response.json();
 
         if (data.redirectTo) {
           setTimeout(() => {
